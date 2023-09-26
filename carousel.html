@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Carousel</title>
+  </head>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    .slideshow {
+      display: none;
+    }
+    img {
+      vertical-align: middle;
+      width: 100%;
+      height: 400px;
+    }
+    .slide-container {
+      max-width: 1000px;
+      position: relative;
+      margin: auto;
+    }
+
+    h1 {
+      text-align: center;
+    }
+    
+
+    .active {
+      background-color: #717171 !important;
+    }
+    .dot {
+      height: 15px;
+      width: 15px;
+      margin: 0 2px;
+      background-color: #bbb;
+      border-radius: 50%;
+      display: inline-block;
+      transition: background-color 0.6s ease;
+      cursor: pointer;
+    }
+    .fade {
+      animation-name: fade;
+      animation-duration: 1.5s;
+    }
+    @keyframes fade {
+      from {
+        opacity: 0.4;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+  </style>
+  <body>
+    <div class="slide-container">
+      <h1>Automatic Slideshow Gallery</h1>
+      <div class="slideshow fade">
+        <img
+          src="https://images.pexels.com/photos/33109/fall-autumn-red-season.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+        />
+      
+      </div>
+      <div class="slideshow fade">
+        <img
+          src="https://images.pexels.com/photos/807598/pexels-photo-807598.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+        />
+   
+      </div>
+      <div class="slideshow fade">
+        <img
+          src="https://images.pexels.com/photos/842711/pexels-photo-842711.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+        />
+       
+      </div>
+    </div>
+    <br />
+    <div style="text-align: center">
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+    </div>
+    <script>
+      let slideIndex = 0;
+      showSlides();
+      function showSlides() {
+        let slide = document.getElementsByClassName("slideshow");
+        let dots = document.getElementsByClassName("dot");
+        for (let i = 0; i < slide.length; i++) {
+          slide[i].style.display = "none";
+        }
+        slideIndex++;
+        if (slideIndex > slide.length) {
+          slideIndex = 1;
+        }
+        for (let i = 0; i < dots.length; i++) {
+          dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slide[slideIndex - 1].style.display = "block";
+        dots[slideIndex - 1].className += " active";
+
+        setTimeout(showSlides, 3000);
+      }
+      function handleClick(event) {
+        let self = this;
+        let selfIndex = [...dots].findIndex(dot => dot == self);
+        let slides = document.querySelectorAll(".slideshow");
+        let activeSlide = [...slides].forEach((slide, index) => {
+            slide.style.display = "none";
+            if (index == selfIndex) {
+                slide.style.display = "block";
+            }
+        })
+
+        dots.forEach(dot => {
+            dot.classList.remove("active");
+            if (dot == self) {
+                dot.classList.add("active");
+            }
+        })
+        
+      }
+        let dots = document.querySelectorAll(".dot");
+        dots.forEach((dot) => {
+        dot.addEventListener("click", handleClick);
+      });
+
+      console.log(dots);
+    </script>
+  </body>
+</html>
